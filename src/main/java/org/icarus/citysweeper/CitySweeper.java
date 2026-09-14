@@ -107,7 +107,7 @@ public final class CitySweeper extends JavaPlugin {
         sweepTask = Bukkit.getScheduler().runTaskTimer(this, new SweepTask(this), interval, interval);
         int types = config.sweep().typeCount();
             logger.info("For every " + (interval / 20) + " seconds, sweeps the items"
-                + (types == 0 ? "." : ", and removes  " + types + " type(s) of mobs."));
+                + (types == 0 ? "." : ", and removes " + types + " type(s) of mobs."));
     }
 
     private Path dataFile() {

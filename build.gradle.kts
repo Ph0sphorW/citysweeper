@@ -25,7 +25,6 @@ bukkitPluginYaml {
     load = BukkitPluginYaml.PluginLoadOrder.STARTUP
     authors.addAll("Ph0sphor")
 
-    // 运行时由 Paper 从 Maven Central 拉取，不需要 shade
     libraries.addAll("de.exlll:configlib-yaml:4.8.1")
 
     commands {
@@ -61,7 +60,6 @@ java {
     toolchain.languageVersion = JavaLanguageVersion.of(21)
 }
 
-// 源码里有中文注释和默认提示文本，必须显式按 UTF-8 编译
 tasks.withType<JavaCompile>().configureEach {
     options.encoding = "UTF-8"
 }
