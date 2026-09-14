@@ -17,7 +17,7 @@ import java.util.Locale;
 import java.util.Set;
 import java.util.logging.Logger;
 
-@SuppressWarnings("FieldCanBeLocal")
+@SuppressWarnings({"FieldMayBeFinal", "FieldCanBeLocal"})
 @Configuration
 public final class SweeperConfig {
 
@@ -27,9 +27,9 @@ public final class SweeperConfig {
             .charset(StandardCharsets.UTF_8)
             .build();
 
-    private final Sweep sweep = new Sweep();
-    private final Bin bin = new Bin();
-    private final Messages messages = new Messages();
+    private Sweep sweep = new Sweep();
+    private Bin bin = new Bin();
+    private Messages messages = new Messages();
 
     public static SweeperConfig loadOrCreate(Path file, Logger logger) {
         SweeperConfig config = YamlConfigurations.update(file, SweeperConfig.class, PROPERTIES);
@@ -62,7 +62,7 @@ public final class SweeperConfig {
         @Comment("每次回收后是否向全服播报。")
         private boolean broadcast = true;
 
-        @Comment("一并要清掉的敌对生物，写 Bukkit 的实体类型名。留空则只清掉落物。")
+        @Comment("一并要清掉的敌对生物。留空则只清掉落物。")
         private List<String> entities = List.of("CREEPER", "SPIDER", "SKELETON", "ZOMBIE");
 
         private transient Set<EntityType> resolved = Set.of();
@@ -113,12 +113,12 @@ public final class SweeperConfig {
     public static final class Bin {
 
         @Comment("回收站菜单的标题，支持 & 颜色代码。")
-        private String title = "&8公共回收站 &7- &f谁都能拿";
+        private String title = "&8公共垃圾桶";
 
         @Comment("每页的格子数，含最后一排导航栏。必须是 9 的倍数。")
         private int size = 54;
 
-        @Comment("单件物品在回收站里最多待多久（秒），到点自动清掉。设为 0 表示不过期。")
+        @Comment("单件物品在回收站里最多待多久（秒）。设为 0 表示不过期。")
         private long lifetimeSeconds = 1800;
 
         private void validate(Logger logger) {
@@ -152,19 +152,19 @@ public final class SweeperConfig {
         private String prefix = "&8[&6CitySweeper&8] &r";
 
         @Comment("每次回收掉落物后的全服播报。")
-        private String sweptItems = "&7已回收 &f%items% &7件掉落物，放进了公共回收站。";
+        private String sweptItems = "&7已回收 &f%items% &7件掉落物。";
 
         @Comment("每次清理敌对生物后的全服播报。")
         private String sweptMobs = "&7已清理 &f%mobs% &7个敌对生物。";
 
         @Comment("玩家打开回收站时的提示。")
-        private String binOpened = "&7回收站里现在有 &f%items% &7件物品，先到先得，随便拿。";
+        private String binOpened = "&7回收站里现在有 &f%items% &7件物品。";
 
         @Comment("背包放不下时，只取走一部分的提示。")
-        private String inventoryFull = "&c你的背包塞不下了，只取走 &f%items% &c件。";
+        private String inventoryFull = "&c你的背包塞不下了，只能取走 &f%items% &c件。";
 
-        @Comment("玩家试图往回收站里放东西时，显示在动作栏上的提示（这条不带前缀）。")
-        private String binReadOnly = "&c回收站只出不进。左键取整组，右键取一个。";
+        @Comment("玩家试图往回收站里放东西时，显示在动作栏上的提示。")
+        private String binReadOnly = "&c回收站只出不进。";
 
         @Comment("没有权限时的提示。")
         private String noPermission = "&c你没有权限执行这个操作。";
