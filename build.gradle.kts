@@ -23,7 +23,8 @@ bukkitPluginYaml {
     apiVersion = "1.21.11"
 
     load = BukkitPluginYaml.PluginLoadOrder.STARTUP
-    authors.addAll("Ph0sphor")
+    version = "${project.version}"
+    authors.addAll("Ph0sphorW")
 
     libraries.addAll("de.exlll:configlib-yaml:4.8.1")
 

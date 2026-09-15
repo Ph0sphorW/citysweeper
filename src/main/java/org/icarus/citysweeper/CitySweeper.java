@@ -33,6 +33,9 @@ public final class CitySweeper extends JavaPlugin {
         this.config = SweeperConfig.loadOrCreate(configFile, logger);
         this.bin = new SweeperBin(this, config);
 
+        logger.info("CitySweeper - District N Sweepers");
+        logger.info("Made by Ph0sphorW");
+
         registerCommand();
         Bukkit.getPluginManager().registerEvents(bin, this);
 
@@ -91,7 +94,7 @@ public final class CitySweeper extends JavaPlugin {
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendMessage(message);
         }
-        getServer().getConsoleSender().sendMessage(message);
+        // getServer().getConsoleSender().sendMessage(message);
     }
 
     private void scheduleSweep() {
@@ -104,10 +107,20 @@ public final class CitySweeper extends JavaPlugin {
             logger.info("Disabled auto sweeping for sweep.interval-seconds is zero.");
             return;
         }
-        sweepTask = Bukkit.getScheduler().runTaskTimer(this, new SweepTask(this), interval, interval);
+        sweepTask = Bukkit.getScheduler().runTaskTimer(this,
+                this::scheduledSweepOrSkip,
+                interval,
+                interval);
         int types = config.sweep().typeCount();
-            logger.info("For every " + (interval / 20) + " seconds, sweeps the items"
+        logger.info("For every " + (interval / 20) + " seconds, sweeps the items"
                 + (types == 0 ? "." : ", and removes " + types + " type(s) of mobs."));
+    }
+
+    private void scheduledSweepOrSkip() {
+        if (Bukkit.getOnlinePlayers().isEmpty()) {
+            return;
+        }
+        new SweepTask(this).run();
     }
 
     private Path dataFile() {

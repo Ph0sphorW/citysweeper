@@ -59,7 +59,8 @@ public final class SweepTask implements Runnable {
                     .replace("%stacks%", Integer.toString(stacks)));
         }
         if (mobs > 0) {
-            plugin.broadcast(config.messages().sweptMobs().replace("%mobs%", Integer.toString(mobs)));
+            plugin.broadcast(config.messages().sweptMobs()
+                    .replace("%mobs%", Integer.toString(mobs)));
         }
     }
 }
